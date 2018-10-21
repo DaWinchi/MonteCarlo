@@ -27,23 +27,27 @@ void Drawer2D::DrawItem(LPDRAWITEMSTRUCT RECT)
 	Graphics gr(RECT->hDC);
 	if (_points != nullptr && !_points->empty())
 	{
-		size_t width = _points[0][0].size();
-		size_t height = _points->size();
+		int width = _points[0][0].size();
+		int height = _points->size();
 		xmin = 0;
 		xmax = width;
 		ymin = 0;
 		ymax = height;
 		Bitmap bmpBuffer(width, height);
+		Graphics grBmp(&bmpBuffer);
 
 		for (int i = 0; i < height; i++)
 		{
 			for (int j = 0; j < width; j++)
 			{
 				Color color;
-				_points[0][i][j] > 0 ?
+				_points[0][i][j] ?
 					color = Color::MakeARGB(255, 255, 255, 255)
 					: color = Color::MakeARGB(255, 0, 0, 0);
+				SolidBrush brush(color);
 				bmpBuffer.SetPixel(j, height - 1 - i, color);
+				//grBmp.FillRectangle(&brush, j, height - 1 - i, 10, -10);
+				
 			}
 		}
 		Rect rect(0, 0, RECT->rcItem.right, RECT->rcItem.bottom);

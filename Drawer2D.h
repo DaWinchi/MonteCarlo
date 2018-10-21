@@ -13,7 +13,7 @@ class Drawer2D : public CStatic
 
 public:
 	double xmin, xmax, ymin, ymax;
-	std::vector<std::vector<int>> *_points;
+	std::vector<std::vector<bool>> *_points;
 	Drawer2D();
 	~Drawer2D();
 	virtual void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
