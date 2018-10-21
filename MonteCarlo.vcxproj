@@ -183,6 +183,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Drawer2D.h" />
     <ClInclude Include="MonteCarlo.h" />
     <ClInclude Include="MonteCarloDlg.h" />
     <ClInclude Include="Resource.h" />
@@ -190,6 +191,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Drawer2D.cpp" />
     <ClCompile Include="MonteCarlo.cpp" />
     <ClCompile Include="MonteCarloDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
