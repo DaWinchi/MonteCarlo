@@ -25,6 +25,8 @@ Drawer2D::~Drawer2D()
 void Drawer2D::DrawItem(LPDRAWITEMSTRUCT RECT)
 {
 	Graphics gr(RECT->hDC);
+	Bitmap bmp(RECT->rcItem.right, RECT->rcItem.bottom, &gr);
+	Graphics grBmp(&bmp);
 	if (_points != nullptr && !_points->empty())
 	{
 		int width = _points[0][0].size();
@@ -33,8 +35,6 @@ void Drawer2D::DrawItem(LPDRAWITEMSTRUCT RECT)
 		xmax = width;
 		ymin = 0;
 		ymax = height;
-		Bitmap bmpBuffer(width, height);
-		Graphics grBmp(&bmpBuffer);
 
 		for (int i = 0; i < height; i++)
 		{
@@ -45,13 +45,12 @@ void Drawer2D::DrawItem(LPDRAWITEMSTRUCT RECT)
 					color = Color::MakeARGB(255, 255, 255, 255)
 					: color = Color::MakeARGB(255, 0, 0, 0);
 				SolidBrush brush(color);
-				bmpBuffer.SetPixel(j, height - 1 - i, color);
-				//grBmp.FillRectangle(&brush, j, height - 1 - i, 10, -10);
+				//bmpBuffer.SetPixel(j, height - 1 - i, color);
+				grBmp.FillRectangle(&brush, X(RECT, j), Y(RECT, i), Width(RECT, 1), Height(RECT, 1));
 				
 			}
 		}
-		Rect rect(0, 0, RECT->rcItem.right, RECT->rcItem.bottom);
-		gr.DrawImage(&bmpBuffer, rect);
+		gr.DrawImage(&bmp, 0,0);
 	}
 }
 
