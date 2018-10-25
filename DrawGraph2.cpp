@@ -1,17 +1,17 @@
 #include "stdafx.h"
-#include "DrawGraph.h"
+#include "DrawGraph2.h"
 #include <math.h>
 
 
 extern CRITICAL_SECTION cs;
 
 using namespace Gdiplus;
-ULONG_PTR token2;
-DrawGraph::DrawGraph()
+ULONG_PTR token4;
+DrawGraph2::DrawGraph2()
 {
 	Status s;
 	GdiplusStartupInput input;
-	s = GdiplusStartup(&token2, &input, NULL);
+	s = GdiplusStartup(&token4, &input, NULL);
 	if (s != Ok)
 	{
 		MessageBox(L"ERROR!!!", L"Îøèáêà", MB_ICONERROR);
@@ -19,13 +19,13 @@ DrawGraph::DrawGraph()
 }
 
 
-DrawGraph::~DrawGraph()
+DrawGraph2::~DrawGraph2()
 {
-	GdiplusShutdown(token2);
+	GdiplusShutdown(token4);
 }
 
 
-void DrawGraph::DrawItem(LPDRAWITEMSTRUCT RECT)
+void DrawGraph2::DrawItem(LPDRAWITEMSTRUCT RECT)
 {
 	EnterCriticalSection(&cs);
 	double maxY = 1;
@@ -46,12 +46,12 @@ void DrawGraph::DrawItem(LPDRAWITEMSTRUCT RECT)
 		}
 	}
 	ymax = maxY + maxY / 3.f;
-	ymin = -ymax/14.f;
+	ymin = -ymax / 14.f;
 	step_y = ymax / 4.f;
 
 	xmax = maxX;
 	xmin = -xmax / 100.f;
-	step_x = xmax / 10.f;
+	step_x = xmax / 12.f;
 
 	LeaveCriticalSection(&cs);
 
@@ -143,22 +143,22 @@ void DrawGraph::DrawItem(LPDRAWITEMSTRUCT RECT)
 }
 
 
-REAL DrawGraph::X(LPDRAWITEMSTRUCT RECT, float x)
+REAL DrawGraph2::X(LPDRAWITEMSTRUCT RECT, float x)
 {
 	return (REAL)(RECT->rcItem.right) / (xmax - xmin)*((x)-xmin);
 }
 
-REAL DrawGraph::Y(LPDRAWITEMSTRUCT RECT, float y)
+REAL DrawGraph2::Y(LPDRAWITEMSTRUCT RECT, float y)
 {
 	return -(REAL)(RECT->rcItem.bottom) / (ymax - ymin)*((y)-ymax);
 }
 
-REAL DrawGraph::Width(LPDRAWITEMSTRUCT RECT, float width)
+REAL DrawGraph2::Width(LPDRAWITEMSTRUCT RECT, float width)
 {
 	return (REAL)(RECT->rcItem.right) / (xmax - xmin)*width;
 }
 
-REAL DrawGraph::Height(LPDRAWITEMSTRUCT RECT, float height)
+REAL DrawGraph2::Height(LPDRAWITEMSTRUCT RECT, float height)
 {
 	return (REAL)(RECT->rcItem.bottom) / (ymax - ymin)*height;
 }
