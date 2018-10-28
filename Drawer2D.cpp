@@ -27,6 +27,7 @@ void Drawer2D::DrawItem(LPDRAWITEMSTRUCT RECT)
 	Graphics gr(RECT->hDC);
 	Bitmap bmp(RECT->rcItem.right, RECT->rcItem.bottom, &gr);
 	Graphics grBmp(&bmp);
+	grBmp.Clear(Color::Red);
 	if (_points != nullptr && !_points->empty())
 	{
 		int width = _points[0][0].size();
@@ -34,7 +35,7 @@ void Drawer2D::DrawItem(LPDRAWITEMSTRUCT RECT)
 		xmin = 0;
 		xmax = width;
 		ymin = 0;
-		ymax = height;
+		ymax = height-1;
 
 		for (int i = 0; i < height; i++)
 		{
