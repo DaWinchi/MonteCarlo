@@ -30,9 +30,11 @@ void DrawGraph::DrawItem(LPDRAWITEMSTRUCT RECT)
 	EnterCriticalSection(&cs);
 	double maxY = 1;
 	double maxX = 1;
+	xmin = 0.3;
 	if (_points != nullptr&&_points[0].size() > 0)
 	{
 		maxY = 0;
+		maxX = 0;
 		int size = _points->size();
 		for (int i = 0; i < size; ++i)
 		{
@@ -44,14 +46,14 @@ void DrawGraph::DrawItem(LPDRAWITEMSTRUCT RECT)
 			maxY = 1;
 			maxX = 1;
 		}
+		xmin = _points[0][0].X;
 	}
 	ymax = maxY + maxY / 3.f;
 	ymin = -ymax/14.f;
-	step_y = ymax / 4.f;
+	step_y = ymax / 6.f;
 
-	xmax = maxX;
-	xmin = -xmax / 100.f;
-	step_x = xmax / 10.f;
+	xmax = maxX;	
+	step_x = xmax / 20.f;
 
 	LeaveCriticalSection(&cs);
 
@@ -117,13 +119,13 @@ void DrawGraph::DrawItem(LPDRAWITEMSTRUCT RECT)
 	{
 		CString str;
 		str.Format(_T("%.5f"), y);
-		grBmp.DrawString(str, -1, &podpis, PointF(X(RECT, 0), Y(RECT, y) + 2.f), NULL, &brush);
+		grBmp.DrawString(str, -1, &podpis, PointF(X(RECT, xmin), Y(RECT, y) + 2.f), NULL, &brush);
 	}
-	for (double y = 0; y >= ymin; y -= step_y)
+	for (double y = -step_y; y >= ymin; y -= step_y)
 	{
 		CString str;
 		str.Format(_T("%.5f"), y);
-		grBmp.DrawString(str, -1, &podpis, PointF(X(RECT, 0), Y(RECT, y) + 2.f), NULL, &brush);
+		grBmp.DrawString(str, -1, &podpis, PointF(X(RECT, xmin), Y(RECT, y) + 2.f), NULL, &brush);
 	}
 	LeaveCriticalSection(&cs);
 
